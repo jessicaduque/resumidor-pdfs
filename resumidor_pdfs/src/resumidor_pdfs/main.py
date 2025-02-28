@@ -1,0 +1,68 @@
+from resumidor_pdfs.crew import ResumidorPdfs
+import os
+# Warning control
+import warnings
+warnings.filterwarnings('ignore')
+
+
+# Carregar múltiplos PDFs.
+# Processar textos longos em seções.
+# Garantir a coesão e fluidez do texto no resumo gerado.
+
+import os
+
+def load_multiple_pdfs(folder_path):
+    inputs = []
+    folder_path = os.path.abspath(folder_path)  
+
+    for filename in os.listdir(folder_path):
+        if filename.lower().endswith(".pdf"): 
+            file_path = os.path.abspath(os.path.join(folder_path, filename))  
+            inputs.append({"pdf_path": file_path})
+    
+    return inputs
+
+def run():
+    inputs = load_multiple_pdfs('..\\pdfs')
+    
+    try:
+        ResumidorPdfs().crew().kickoff_for_each(inputs=inputs)
+    except Exception as e:
+        raise Exception(f"An error occurred while running the crew: {e}")
+
+
+def train():
+    """
+    Train the crew for a given number of iterations.
+    """
+    inputs = {
+        "topic": "AI LLMs"
+    }
+    try:
+        ResumidorPdfs().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+
+    except Exception as e:
+        raise Exception(f"An error occurred while training the crew: {e}")
+
+def replay():
+    """
+    Replay the crew execution from a specific task.
+    """
+    try:
+        ResumidorPdfs().crew().replay(task_id=sys.argv[1])
+
+    except Exception as e:
+        raise Exception(f"An error occurred while replaying the crew: {e}")
+
+def test():
+    """
+    Test the crew execution and returns the results.
+    """
+    inputs = {
+        "topic": "AI LLMs"
+    }
+    try:
+        ResumidorPdfs().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
+
+    except Exception as e:
+        raise Exception(f"An error occurred while testing the crew: {e}")

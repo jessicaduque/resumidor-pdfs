@@ -1,0 +1,24 @@
+[project]
+name = "resumidor_pdfs"
+version = "0.1.0"
+description = "resumidor-pdfs using crewAI"
+authors = [{ name = "Jessica Duque", email = "jduquedeveloper@gmail.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.102.0,<1.0.0",
+    "PyPDF2==3.0.1"
+]
+
+[project.scripts]
+resumidor_pdfs = "resumidor_pdfs.main:run"
+run_crew = "resumidor_pdfs.main:run"
+train = "resumidor_pdfs.main:train"
+replay = "resumidor_pdfs.main:replay"
+test = "resumidor_pdfs.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

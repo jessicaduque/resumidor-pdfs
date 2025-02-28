@@ -1,0 +1,40 @@
+read_pdf_task:
+  description: >
+    Using the path {pdf_path}, access the proper PDF file,
+    so that its text can be returned.
+  expected_output: >
+    Return the brute text recieved from the tool.
+  agent: pdf_reader_agent
+
+analyze_task:
+  description: >
+    Your purpose is to extract the most relevant information from the context text recieved.
+  expected_output: >
+    A text that contains only the most relevant parts of the original text, without unnecessary details.
+  agent: analyzer_agent
+  context: [read_pdf_task]
+
+summarize_task:
+  description: >
+    Summarize the received text in a way that keeps it cohesive while making it as concise as possible.
+  expected_output: >
+    A summary text generated from the original text.
+  agent: summarizer_agent
+  context: [analyze_task]
+
+format_task:
+  description: >
+    Format the given summary to match the style of a blog post.
+  expected_output: >
+    A Markdown-formatted text that includes a relevant title and subheadings to organize the content. 
+    The text should be cohesive and clearly formatted.
+  agent: formatter_agent
+  context: [summarize_task]
+
+quality_assurance_task:
+  description: >
+    Ensure that the quality of the produced blog post is clear and consistent with the original PDF.
+  expected_output: >
+    The final Markdown text after review.
+  agent: quality_assurance_agent
+  context: [format_task]
