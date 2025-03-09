@@ -1,7 +1,3 @@
-# Warning control
-import warnings
-warnings.filterwarnings('ignore')
-
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from resumidor_pdfs.tools.custom_tool import PDFReaderTool, TextSections
@@ -16,7 +12,7 @@ class ResumidorPdfs():
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
 	
-	pdfReader = PDFReaderTool(result_as_answer=True)
+	pdf_Reader = PDFReaderTool(result_as_answer=True)
 
 	ollama_llm = LLM(
 		model=os.environ.get("MODEL"),
@@ -27,7 +23,7 @@ class ResumidorPdfs():
 	def pdf_reader_agent(self) -> Agent:
 		return Agent(
 			config = self.agents_config['pdf_reader_agent'],
-			tools = [self.pdfReader], 
+			tools = [self.pdf_Reader], 
 			verbose = True,
 			allow_delegation = False,
 			llm=self.ollama_llm,

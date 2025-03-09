@@ -1,9 +1,10 @@
-import os
-import sys
-from resumidor_pdfs.crew import ResumidorPdfs
 # Warning control
 import warnings
 warnings.filterwarnings('ignore')
+
+import os
+import sys
+from resumidor_pdfs.crew import ResumidorPdfs
 
 # Processar textos longos em seções.
 # Garantir a coesão e fluidez do texto no resumo gerado.
