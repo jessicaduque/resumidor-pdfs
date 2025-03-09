@@ -1,6 +1,13 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from resumidor_pdfs.tools.custom_tool import PDFReaderTool
+from dotenv import load_dotenv
+import os
+# Warning control
+import warnings
+warnings.filterwarnings('ignore')
+
+load_dotenv()
 
 @CrewBase
 class ResumidorPdfs():
@@ -9,13 +16,19 @@ class ResumidorPdfs():
 	
 	pdfReader = PDFReaderTool(result_as_answer=True)
 
+	ollama_llm = LLM(
+		model=os.environ.get("MODEL"),
+		base_url=os.environ.get("API_BASE")
+	)
+
 	@agent
 	def pdf_reader_agent(self) -> Agent:
 		return Agent(
 			config = self.agents_config['pdf_reader_agent'],
 			tools = [self.pdfReader], 
 			verbose = True,
-			allow_delegation = True
+			allow_delegation = False,
+			llm=self.ollama_llm
 		)
 
 	@agent
@@ -23,7 +36,8 @@ class ResumidorPdfs():
 		return Agent(
 			config=self.agents_config['analyzer_agent'],
 			verbose=True,
-			allow_delegation = False
+			allow_delegation = False,
+			llm=self.ollama_llm
 		)
 	
 	@agent
@@ -39,7 +53,8 @@ class ResumidorPdfs():
 		return Agent(
 			config=self.agents_config['formatter_agent'],
 			verbose=True,
-			allow_delegation = False
+			allow_delegation = False,
+			llm=self.ollama_llm
 		)
 	
 	@agent
@@ -47,7 +62,8 @@ class ResumidorPdfs():
 		return Agent(
 			config=self.agents_config['quality_assurance_agent'],
 			verbose=True,
-			allow_delegation = False
+			allow_delegation = False,
+			llm=self.ollama_llm
 		)
 
 	@task
@@ -78,7 +94,7 @@ class ResumidorPdfs():
 	def quality_assurance_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['quality_assurance_task'],
-			output_file='blog.md'
+			output_file='{name_of_pdf}-blog.md'
 		)
 
 	@crew

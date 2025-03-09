@@ -1,12 +1,12 @@
 [project]
 name = "resumidor_pdfs"
-version = "0.1.0"
+version = "0.1.1"
 description = "resumidor-pdfs using crewAI"
 authors = [{ name = "Jessica Duque", email = "jduquedeveloper@gmail.com" }]
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "crewai[tools]>=0.102.0,<1.0.0",
-    "PyPDF2==3.0.1"
+    "crewai[memory,tools]>=0.102.0,<1.0.0",
+    "pypdf2==3.0.1",
 ]
 
 [project.scripts]

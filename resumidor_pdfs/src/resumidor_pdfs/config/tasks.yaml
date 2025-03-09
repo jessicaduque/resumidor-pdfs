@@ -1,24 +1,29 @@
 read_pdf_task:
   description: >
-    Using the path {pdf_path}, access the proper PDF file,
+    Using the path {pdf_path}, access the PDF file
     so that its text can be returned.
   expected_output: >
-    Return the brute text recieved from the tool.
+    Text extracted from the PDF file.
   agent: pdf_reader_agent
 
 analyze_task:
   description: >
-    Your purpose is to extract the most relevant information from the context text recieved.
+    Your purpose is to analyze the recieved text and determine whether
+    information should be removed or not. You may remove redundant text,
+    unecessary extra spaces and any text that deviates too much from the general text topic. 
+    Really make sure you're not removing information that adds value to the general text.
   expected_output: >
-    A text that contains only the most relevant parts of the original text, without unnecessary details.
+    Text that contains only the most relevant parts of the original text, without unnecessary details.
   agent: analyzer_agent
   context: [read_pdf_task]
 
 summarize_task:
   description: >
-    Summarize the received text in a way that keeps it cohesive while making it as concise as possible.
+    Summarize the received text, using the specified ChatGPT model, in a way that keeps it cohesive. 
+    If the text recieved isn't short already, be sure to compare it to the original text's size, 
+    and then make it relatively shorter. 
   expected_output: >
-    A summary text generated from the original text.
+    A relatively consise and accurate summmary generated from the recieved text. 
   agent: summarizer_agent
   context: [analyze_task]
 
@@ -35,6 +40,7 @@ quality_assurance_task:
   description: >
     Ensure that the quality of the produced blog post is clear and consistent with the original PDF.
   expected_output: >
-    The final Markdown text after review.
+    The final Markdown text after review. At the end, guarantee there is a line that signs off the text 
+    like this: "Made by Ollama/Gpt."
   agent: quality_assurance_agent
   context: [format_task]

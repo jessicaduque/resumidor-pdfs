@@ -3211,7 +3211,7 @@ wheels = [
 
 [[package]]
 name = "resumidor-pdfs"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "crewai", extra = ["tools"] },
@@ -3220,7 +3220,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "crewai", extras = ["tools"], specifier = ">=0.102.0,<1.0.0" },
+    { name = "crewai", extras = ["memory", "tools"], specifier = ">=0.102.0,<1.0.0" },
     { name = "pypdf2", specifier = "==3.0.1" },
 ]
 

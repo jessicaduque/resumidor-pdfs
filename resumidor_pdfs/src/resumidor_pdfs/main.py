@@ -1,15 +1,12 @@
 from resumidor_pdfs.crew import ResumidorPdfs
 import os
+import sys
 # Warning control
 import warnings
 warnings.filterwarnings('ignore')
 
-
-# Carregar múltiplos PDFs.
 # Processar textos longos em seções.
 # Garantir a coesão e fluidez do texto no resumo gerado.
-
-import os
 
 def load_multiple_pdfs(folder_path):
     inputs = []
@@ -18,13 +15,13 @@ def load_multiple_pdfs(folder_path):
     for filename in os.listdir(folder_path):
         if filename.lower().endswith(".pdf"): 
             file_path = os.path.abspath(os.path.join(folder_path, filename))  
-            inputs.append({"pdf_path": file_path})
+            inputs.append({"pdf_path": file_path, "name_of_pdf": filename[:-4]})
     
     return inputs
 
 def run():
     inputs = load_multiple_pdfs('..\\pdfs')
-    
+
     try:
         ResumidorPdfs().crew().kickoff_for_each(inputs=inputs)
     except Exception as e:
