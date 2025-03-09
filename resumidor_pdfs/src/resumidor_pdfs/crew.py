@@ -12,7 +12,7 @@ class ResumidorPdfs():
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
 	
-	pdf_Reader = PDFReaderTool(result_as_answer=True)
+	pdf_reader = PDFReaderTool(result_as_answer=True)
 
 	ollama_llm = LLM(
 		model=os.environ.get("MODEL"),
@@ -23,7 +23,7 @@ class ResumidorPdfs():
 	def pdf_reader_agent(self) -> Agent:
 		return Agent(
 			config = self.agents_config['pdf_reader_agent'],
-			tools = [self.pdf_Reader], 
+			tools = [self.pdf_reader], 
 			verbose = True,
 			allow_delegation = False,
 			llm=self.ollama_llm,

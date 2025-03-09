@@ -6,9 +6,6 @@ import os
 import sys
 from resumidor_pdfs.crew import ResumidorPdfs
 
-# Processar textos longos em seções.
-# Garantir a coesão e fluidez do texto no resumo gerado.
-
 def load_multiple_pdfs(folder_path):
     inputs = []
     folder_path = os.path.abspath(folder_path)  
