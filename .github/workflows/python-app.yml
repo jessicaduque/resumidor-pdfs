@@ -44,4 +44,3 @@ jobs:
         args: >
           -Dsonar.organization=jessicaduque
           -Dsonar.projectKey=jessicaduque_resumidor-pdfs
-          -Dsonar.sources=src
