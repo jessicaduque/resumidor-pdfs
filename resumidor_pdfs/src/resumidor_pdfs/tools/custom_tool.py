@@ -1,5 +1,8 @@
 from crewai.tools import BaseTool
 from PyPDF2 import PdfReader
+from typing import List
+from pydantic import BaseModel, Field
+
 
 class PDFReaderTool(BaseTool):
     name: str = "PDF Reader Tool"
@@ -11,3 +14,6 @@ class PDFReaderTool(BaseTool):
         for page in reader.pages:
             text += page.extract_text()
         return text
+    
+class TextSections(BaseModel):
+    argument: List[str] = Field(..., description="List of strings that separate the original text in sections")

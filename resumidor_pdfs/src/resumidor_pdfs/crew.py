@@ -1,11 +1,13 @@
-from crewai import Agent, Crew, Process, Task, LLM
-from crewai.project import CrewBase, agent, crew, task
-from resumidor_pdfs.tools.custom_tool import PDFReaderTool
-from dotenv import load_dotenv
-import os
 # Warning control
 import warnings
 warnings.filterwarnings('ignore')
+
+from crewai import Agent, Crew, Process, Task, LLM
+from crewai.project import CrewBase, agent, crew, task
+from resumidor_pdfs.tools.custom_tool import PDFReaderTool, TextSections
+from dotenv import load_dotenv
+import os
+
 
 load_dotenv()
 
@@ -39,7 +41,8 @@ class ResumidorPdfs():
 			verbose=True,
 			allow_delegation = False,
 			llm=self.ollama_llm,
-			memory=True
+			memory=True,
+			output_pydantic=TextSections
 		)
 	
 	@agent

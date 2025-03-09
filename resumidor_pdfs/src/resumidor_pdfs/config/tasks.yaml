@@ -8,22 +8,26 @@ read_pdf_task:
 
 analyze_task:
   description: >
-    Your purpose is to analyze the recieved text and determine whether
-    information should be removed or not. You may remove redundant text,
-    unecessary extra spaces and any text that deviates too much from the general text topic. 
-    Really make sure you're not removing information that adds value to the general text.
+    Your purpose is to analyze the recieved text and see if it has more than around 1000 words.
+    If it does, separate the text in different sections of approximately 1000 words and store it
+    in the output list.
+    If it doesn't, since the text is too short, just put all the raw and unmodified text in one string in the list.
+    When storing a section, if there are an unecessary amount of extra spaces, you may remove those spaces from that section.
+    Remember, each section is simply a part of the raw original text.
   expected_output: >
-    Text that contains only the most relevant parts of the original text, without unnecessary details.
+    A TextSections that contains a list with strings that contain the sections of raw text sections
+    from the recieved text that were subdivided.
   agent: analyzer_agent
   context: [read_pdf_task]
 
 summarize_task:
   description: >
-    Summarize the received text, using the specified ChatGPT model, in a way that keeps it cohesive. 
-    If the text recieved isn't short already, be sure to compare it to the original text's size, 
-    and then make it relatively shorter. 
+    A structure will be recieved, with a list of a minimum of 1 string. For each string, sequentially
+    summarize each one, than concatenate it into the other. When two summaries are joined, make sure
+    they continue cohesive.
+    At the end, make sure everything makes sense, and is accurate to the content from the original text.
   expected_output: >
-    A relatively consise and accurate summmary generated from the recieved text. 
+    A consise and accurate summmary generated from the recieved text. 
   agent: summarizer_agent
   context: [analyze_task]
 
@@ -36,9 +40,9 @@ format_task:
     - Subheadings to organize all the content;
     - A conclusion. 
     The text should be cohesive and properly formatted according to Markdown standards. 
-    At the end, guarantee there is a line that signs off the text 
-    like this: "Made by Ollama/ChatGPT."
-    After formatting it, revise your work to make sure it looks correct.
+    At the end, guarantee there is a line break for another line that signs off the text 
+    in the following format: "Made by Ollama/ChatGPT."
+    After formatting it, revise your work to make sure it looks cohesive. 
   agent: formatter_agent
   context: [summarize_task]
 

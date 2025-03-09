@@ -1,6 +1,6 @@
-from resumidor_pdfs.crew import ResumidorPdfs
 import os
 import sys
+from resumidor_pdfs.crew import ResumidorPdfs
 # Warning control
 import warnings
 warnings.filterwarnings('ignore')
@@ -29,22 +29,15 @@ def run():
 
 
 def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        "topic": "AI LLMs"
-    }
+    inputs = load_multiple_pdfs('..\\pdfs')
+
     try:
-        ResumidorPdfs().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+        ResumidorPdfs().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs[0])
 
     except Exception as e:
         raise Exception(f"An error occurred while training the crew: {e}")
 
 def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
     try:
         ResumidorPdfs().crew().replay(task_id=sys.argv[1])
 
@@ -52,14 +45,10 @@ def replay():
         raise Exception(f"An error occurred while replaying the crew: {e}")
 
 def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        "topic": "AI LLMs"
-    }
+    inputs = load_multiple_pdfs('..\\pdfs')
+    
     try:
-        ResumidorPdfs().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
+        ResumidorPdfs().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs[0])
 
     except Exception as e:
         raise Exception(f"An error occurred while testing the crew: {e}")
