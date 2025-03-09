@@ -28,7 +28,8 @@ class ResumidorPdfs():
 			tools = [self.pdfReader], 
 			verbose = True,
 			allow_delegation = False,
-			llm=self.ollama_llm
+			llm=self.ollama_llm,
+			memory=True
 		)
 
 	@agent
@@ -37,7 +38,8 @@ class ResumidorPdfs():
 			config=self.agents_config['analyzer_agent'],
 			verbose=True,
 			allow_delegation = False,
-			llm=self.ollama_llm
+			llm=self.ollama_llm,
+			memory=True
 		)
 	
 	@agent
@@ -45,7 +47,9 @@ class ResumidorPdfs():
 		return Agent(
 			config=self.agents_config['summarizer_agent'],
 			verbose=True,
-			allow_delegation = False
+			allow_delegation = False,
+			model="gpt-4o-turbo",
+			memory=True
 		)
 	
 	@agent
@@ -54,16 +58,8 @@ class ResumidorPdfs():
 			config=self.agents_config['formatter_agent'],
 			verbose=True,
 			allow_delegation = False,
-			llm=self.ollama_llm
-		)
-	
-	@agent
-	def quality_assurance_agent(self) -> Agent:
-		return Agent(
-			config=self.agents_config['quality_assurance_agent'],
-			verbose=True,
-			allow_delegation = False,
-			llm=self.ollama_llm
+			llm=self.ollama_llm,
+			memory=True
 		)
 
 	@task
@@ -87,13 +83,7 @@ class ResumidorPdfs():
 	@task
 	def format_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['format_task']
-		)
-	
-	@task
-	def quality_assurance_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['quality_assurance_task'],
+			config=self.tasks_config['format_task'],
 			output_file='{name_of_pdf}-blog.md'
 		)
 

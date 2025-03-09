@@ -31,16 +31,14 @@ format_task:
   description: >
     Format the given summary to match the style of a blog post.
   expected_output: >
-    A Markdown-formatted text that includes a relevant title and subheadings to organize the content. 
-    The text should be cohesive and clearly formatted.
+    A Markdown-formatted text that has to include:
+    - A relevant main title (always the first element of file);
+    - Subheadings to organize all the content;
+    - A conclusion. 
+    The text should be cohesive and properly formatted according to Markdown standards. 
+    At the end, guarantee there is a line that signs off the text 
+    like this: "Made by Ollama/ChatGPT."
+    After formatting it, revise your work to make sure it looks correct.
   agent: formatter_agent
   context: [summarize_task]
 
-quality_assurance_task:
-  description: >
-    Ensure that the quality of the produced blog post is clear and consistent with the original PDF.
-  expected_output: >
-    The final Markdown text after review. At the end, guarantee there is a line that signs off the text 
-    like this: "Made by Ollama/Gpt."
-  agent: quality_assurance_agent
-  context: [format_task]
