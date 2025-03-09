@@ -37,6 +37,11 @@ jobs:
         
      # 4. Analisar a qualidade do código com Sonar
     - name: SonarCloud Scan
-      uses: SonarSource/sonarqube-scan-action@v5
+      uses: sonarsource/sonarcloud-github-action@v2
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.organization=jessicaduque
+          -Dsonar.projectKey=jessicaduque_resumidor-pdfs
+          -Dsonar.sources=src
