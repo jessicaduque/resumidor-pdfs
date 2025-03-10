@@ -68,8 +68,7 @@ class ResumidorPdfs():
 	@task
 	def analyze_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['analyze_task'],
-			output_pydantic=TextSections
+			config=self.tasks_config['analyze_task']
 		)
 	
 	@task

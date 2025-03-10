@@ -9,20 +9,18 @@ read_pdf_task:
 analyze_task:
   description: >
     Your purpose is to analyze the recieved list of strings and remove any excessive blank spaces/line breaks.
-    Return the list of strings, and apart from removed spaces, don't alter the text.
+    Apart from that, extract the most relevant pieces of information from the whole text, without altering it.
   expected_output: >
-    A TextSections that contains a list with strings that contain the sections of an original text.
+    A report on the most relevant parts of the recieved strings from the text.
   agent: analyzer_agent
   context: [read_pdf_task]
 
 summarize_task:
   description: >
-    A structure will be recieved, with a list of a minimum of 1 string. For each string, sequentially
-    summarize each one, than concatenate it into the other. When two summaries are joined, make sure
-    they continue cohesive.
-    At the end, make sure everything makes sense, and is accurate to the content from the original text.
+    Summarize the text based on previous information. Make sure the summary is cohesive.
+    At the end, review your work to make sure everything makes sense, and is accurate to the content from the original text.
   expected_output: >
-    A consise and accurate summmary generated from the recieved text. 
+    A consise and accurate summmary generated from the original text. 
   agent: summarizer_agent
   context: [analyze_task]
 
