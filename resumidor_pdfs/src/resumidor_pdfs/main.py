@@ -22,9 +22,9 @@ def run():
 
     try:
         ResumidorPdfs().crew().kickoff_for_each(inputs=inputs)
-        #print(ResumidorPdfs().crew().usage_metrics)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
+
 
 def train():
     inputs = load_multiple_pdfs('..\\pdfs')

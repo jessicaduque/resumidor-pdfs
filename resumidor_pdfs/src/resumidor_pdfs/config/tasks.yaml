@@ -1,20 +1,22 @@
 read_pdf_task:
   description: >
-    Using the path {pdf_path}, access the PDF file with the designated tool
-    so that a PDFText can be returned.
+    Using the path {pdf_path}, access the PDF file
+    so that its text can be returned.
   expected_output: >
-    Your response must have these exact field names with values as described: {model_info}
+    Text extracted from the PDF file.
   agent: pdf_reader_agent
 
 analyze_task:
   description: >
-    You will recieve a string, and you have to input that into the Text Section Separator Tool. 
-    Be sure to use the tool.
-    Use that tool, and you will recieve a TextSections with a 
-    list of one of more strings, that contain unmodified parts of the original text. Return that.
+    Your purpose is to analyze the recieved text and see if it has more than around 1000 words.
+    If it does, separate the text in different sections of approximately 1000 words and store it
+    in the output list.
+    If it doesn't, since the text is too short, just put all the raw and unmodified text in one string in the list.
+    When storing a section, if there are an unecessary amount of extra spaces, you may remove those spaces from that section.
+    Remember, each section is simply a part of the raw original text.
   expected_output: >
-    A TextSections that contains a list with strings that contain the sections of the original text
-    that were analyzed and possibly modified.
+    A TextSections that contains a list with strings that contain the sections of raw text sections
+    from the recieved text that were subdivided.
   agent: analyzer_agent
   context: [read_pdf_task]
 
