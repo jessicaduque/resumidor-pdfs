@@ -1,6 +1,6 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-from resumidor_pdfs.tools.custom_tool import PDFReaderTool, TextSections
+from resumidor_pdfs.tools.custom_tool import PDFText, PDFReaderTool, TextSections, SeparateTextSectionsTool
 from dotenv import load_dotenv
 import os
 
@@ -13,6 +13,7 @@ class ResumidorPdfs():
 	tasks_config = 'config/tasks.yaml'
 	
 	pdf_reader = PDFReaderTool(result_as_answer=True)
+	text_summarizer = SeparateTextSectionsTool()
 
 	ollama_llm = LLM(
 		model=os.environ.get("MODEL"),
@@ -34,11 +35,11 @@ class ResumidorPdfs():
 	def analyzer_agent(self) -> Agent:
 		return Agent(
 			config=self.agents_config['analyzer_agent'],
+			tools = [self.text_summarizer], 
 			verbose=True,
 			allow_delegation = False,
 			llm=self.ollama_llm,
-			memory=True,
-			output_pydantic=TextSections
+			memory=True
 		)
 	
 	@agent
@@ -63,14 +64,17 @@ class ResumidorPdfs():
 
 	@task
 	def read_pdf_task(self) -> Task:
+		pdf_model_info = PDFText().get_field_info_json()
 		return Task(
-			config=self.tasks_config['read_pdf_task']
+			config=self.tasks_config['read_pdf_task'],
+			output_pydantic=PDFText
 		)
 
 	@task
 	def analyze_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['analyze_task']
+			config=self.tasks_config['analyze_task'],
+			output_pydantic=TextSections
 		)
 	
 	@task
