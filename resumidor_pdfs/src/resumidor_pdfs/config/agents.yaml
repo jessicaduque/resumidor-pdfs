@@ -2,10 +2,9 @@ pdf_reader_agent:
   role: >
     PDF Reader
   goal: >
-    Read the raw text from a PDF file.
+    Recieve the raw text sections from a PDF file.
   backstory: >
-    You are an expert at getting the raw text from a PDF file, without modifying 
-    any of its content.
+    You are an expert at getting the raw text from a PDF file using a designated tool.
 
 analyzer_agent:
   role: >
