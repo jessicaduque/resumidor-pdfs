@@ -3,20 +3,15 @@ read_pdf_task:
     Using the path {pdf_path}, access the PDF file
     so that its text can be returned.
   expected_output: >
-    Text extracted from the PDF file.
+    A list of strings extracted from the PDF file.
   agent: pdf_reader_agent
 
 analyze_task:
   description: >
-    Your purpose is to analyze the recieved text and see if it has more than around 1000 words.
-    If it does, separate the text in different sections of approximately 1000 words and store it
-    in the output list.
-    If it doesn't, since the text is too short, just put all the raw and unmodified text in one string in the list.
-    When storing a section, if there are an unecessary amount of extra spaces, you may remove those spaces from that section.
-    Remember, each section is simply a part of the raw original text.
+    Your purpose is to analyze the recieved list of strings and remove any excessive blank spaces/line breaks.
+    Return the list of strings, and apart from removed spaces, don't alter the text.
   expected_output: >
-    A TextSections that contains a list with strings that contain the sections of raw text sections
-    from the recieved text that were subdivided.
+    A TextSections that contains a list with strings that contain the sections of an original text.
   agent: analyzer_agent
   context: [read_pdf_task]
 

@@ -4,7 +4,6 @@ from resumidor_pdfs.tools.custom_tool import PDFReaderTool, TextSections
 from dotenv import load_dotenv
 import os
 
-
 load_dotenv()
 
 @CrewBase
@@ -37,8 +36,7 @@ class ResumidorPdfs():
 			verbose=True,
 			allow_delegation = False,
 			llm=self.ollama_llm,
-			memory=True,
-			output_pydantic=TextSections
+			memory=True
 		)
 	
 	@agent
@@ -70,7 +68,8 @@ class ResumidorPdfs():
 	@task
 	def analyze_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['analyze_task']
+			config=self.tasks_config['analyze_task'],
+			output_pydantic=TextSections
 		)
 	
 	@task

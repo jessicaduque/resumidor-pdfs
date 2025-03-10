@@ -8,16 +8,14 @@ pdf_reader_agent:
 
 analyzer_agent:
   role: >
-    Professional Text Analyst and Extractor
+    Expert Text Analyst and Extractor
   goal: >
-    Go over the recieved text and identify the relevant parts. According to that, 
-    separate the original text in smaller sections. These sections should contain
-    the raw text recieved from before, and inserted into the list.
+    Go over each string in the list and analyze if there are any excessive/unecessary
+    blank spaces/line breaks, so that they be removed. 
   backstory: >
-    You are a professional in analyzing texts and extracting their most important information. 
-    You're capable of identifying redundant parts, extra spaces and line breaks and 
-    meaningless information, so that they can be cut from the text, while also modifying 
-    anything needed so that the whole text continues cohesive. 
+    You are a professional in analyzing texts.
+    You're capable of identifying extra spaces and line breaks, 
+    so that they can be cut from the text.
 
 summarizer_agent:
   role: >
